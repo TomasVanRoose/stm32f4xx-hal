@@ -60,6 +60,9 @@ use pll::SaiPll;
 
 mod pll;
 
+mod enable;
+pub use enable::*;
+
 /// Extension trait that constrains the `RCC` peripheral
 pub trait RccExt {
     /// Constrains the `RCC` peripheral so it plays nicely with the other abstractions

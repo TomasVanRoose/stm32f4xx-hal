@@ -835,25 +835,6 @@ macro_rules! gpio {
     }
 }
 
-#[cfg(any(
-    feature = "stm32f401",
-    feature = "stm32f405",
-    feature = "stm32f407",
-    feature = "stm32f410",
-    feature = "stm32f411",
-    feature = "stm32f412",
-    feature = "stm32f413",
-    feature = "stm32f415",
-    feature = "stm32f417",
-    feature = "stm32f423",
-    feature = "stm32f427",
-    feature = "stm32f429",
-    feature = "stm32f437",
-    feature = "stm32f439",
-    feature = "stm32f446",
-    feature = "stm32f469",
-    feature = "stm32f479"
-))]
 gpio!(GPIOA, gpioa, 0, PA, 0, [
     PA0: (pa0, 0, Input<Floating>, exticr1),
     PA1: (pa1, 1, Input<Floating>, exticr1),
@@ -873,25 +854,6 @@ gpio!(GPIOA, gpioa, 0, PA, 0, [
     PA15: (pa15, 15, Input<Floating>, exticr4),
 ]);
 
-#[cfg(any(
-    feature = "stm32f401",
-    feature = "stm32f405",
-    feature = "stm32f407",
-    feature = "stm32f410",
-    feature = "stm32f411",
-    feature = "stm32f412",
-    feature = "stm32f413",
-    feature = "stm32f415",
-    feature = "stm32f417",
-    feature = "stm32f423",
-    feature = "stm32f427",
-    feature = "stm32f429",
-    feature = "stm32f437",
-    feature = "stm32f439",
-    feature = "stm32f446",
-    feature = "stm32f469",
-    feature = "stm32f479"
-))]
 gpio!(GPIOB, gpiob, 1, PB, 1, [
     PB0: (pb0, 0, Input<Floating>, exticr1),
     PB1: (pb1, 1, Input<Floating>, exticr1),
@@ -911,25 +873,6 @@ gpio!(GPIOB, gpiob, 1, PB, 1, [
     PB15: (pb15, 15, Input<Floating>, exticr4),
 ]);
 
-#[cfg(any(
-    feature = "stm32f401",
-    feature = "stm32f405",
-    feature = "stm32f407",
-    feature = "stm32f410",
-    feature = "stm32f411",
-    feature = "stm32f412",
-    feature = "stm32f413",
-    feature = "stm32f415",
-    feature = "stm32f417",
-    feature = "stm32f423",
-    feature = "stm32f427",
-    feature = "stm32f429",
-    feature = "stm32f437",
-    feature = "stm32f439",
-    feature = "stm32f446",
-    feature = "stm32f469",
-    feature = "stm32f479"
-))]
 gpio!(GPIOC, gpioc, 2, PC, 2, [
     PC0: (pc0, 0, Input<Floating>, exticr1),
     PC1: (pc1, 1, Input<Floating>, exticr1),
@@ -949,24 +892,7 @@ gpio!(GPIOC, gpioc, 2, PC, 2, [
     PC15: (pc15, 15, Input<Floating>, exticr4),
 ]);
 
-#[cfg(any(
-    feature = "stm32f401",
-    feature = "stm32f405",
-    feature = "stm32f407",
-    feature = "stm32f411",
-    feature = "stm32f412",
-    feature = "stm32f413",
-    feature = "stm32f415",
-    feature = "stm32f417",
-    feature = "stm32f423",
-    feature = "stm32f427",
-    feature = "stm32f429",
-    feature = "stm32f437",
-    feature = "stm32f439",
-    feature = "stm32f446",
-    feature = "stm32f469",
-    feature = "stm32f479"
-))]
+#[cfg(feature = "gpiod")]
 gpio!(GPIOD, gpiod, 3, PD, 3, [
     PD0: (pd0, 0, Input<Floating>, exticr1),
     PD1: (pd1, 1, Input<Floating>, exticr1),
@@ -986,24 +912,7 @@ gpio!(GPIOD, gpiod, 3, PD, 3, [
     PD15: (pd15, 15, Input<Floating>, exticr4),
 ]);
 
-#[cfg(any(
-    feature = "stm32f401",
-    feature = "stm32f405",
-    feature = "stm32f407",
-    feature = "stm32f411",
-    feature = "stm32f412",
-    feature = "stm32f413",
-    feature = "stm32f415",
-    feature = "stm32f417",
-    feature = "stm32f423",
-    feature = "stm32f427",
-    feature = "stm32f429",
-    feature = "stm32f437",
-    feature = "stm32f439",
-    feature = "stm32f446",
-    feature = "stm32f469",
-    feature = "stm32f479"
-))]
+#[cfg(feature = "gpioe")]
 gpio!(GPIOE, gpioe, 4, PE, 4, [
     PE0: (pe0, 0, Input<Floating>, exticr1),
     PE1: (pe1, 1, Input<Floating>, exticr1),
@@ -1023,22 +932,7 @@ gpio!(GPIOE, gpioe, 4, PE, 4, [
     PE15: (pe15, 15, Input<Floating>, exticr4),
 ]);
 
-#[cfg(any(
-    feature = "stm32f405",
-    feature = "stm32f407",
-    feature = "stm32f412",
-    feature = "stm32f413",
-    feature = "stm32f415",
-    feature = "stm32f417",
-    feature = "stm32f423",
-    feature = "stm32f427",
-    feature = "stm32f429",
-    feature = "stm32f437",
-    feature = "stm32f439",
-    feature = "stm32f446",
-    feature = "stm32f469",
-    feature = "stm32f479"
-))]
+#[cfg(feature = "gpiof")]
 gpio!(GPIOF, gpiof, 5, PF, 5, [
     PF0: (pf0, 0, Input<Floating>, exticr1),
     PF1: (pf1, 1, Input<Floating>, exticr1),
@@ -1058,22 +952,7 @@ gpio!(GPIOF, gpiof, 5, PF, 5, [
     PF15: (pf15, 15, Input<Floating>, exticr4),
 ]);
 
-#[cfg(any(
-    feature = "stm32f405",
-    feature = "stm32f407",
-    feature = "stm32f412",
-    feature = "stm32f413",
-    feature = "stm32f415",
-    feature = "stm32f417",
-    feature = "stm32f423",
-    feature = "stm32f427",
-    feature = "stm32f429",
-    feature = "stm32f437",
-    feature = "stm32f439",
-    feature = "stm32f446",
-    feature = "stm32f469",
-    feature = "stm32f479"
-))]
+#[cfg(feature = "gpiog")]
 gpio!(GPIOG, gpiog, 6, PG, 6, [
     PG0: (pg0, 0, Input<Floating>, exticr1),
     PG1: (pg1, 1, Input<Floating>, exticr1),
@@ -1136,18 +1015,7 @@ gpio!(GPIOH, gpioh, 7, PH, 7, [
     PH1: (ph1, 1, Input<Floating>, exticr1),
 ]);
 
-#[cfg(any(
-    feature = "stm32f405",
-    feature = "stm32f407",
-    feature = "stm32f415",
-    feature = "stm32f417",
-    feature = "stm32f427",
-    feature = "stm32f429",
-    feature = "stm32f437",
-    feature = "stm32f439",
-    feature = "stm32f469",
-    feature = "stm32f479"
-))]
+#[cfg(feature = "gpioi")]
 gpio!(GPIOI, gpioi, 8, PI, 8, [
     PI0: (pi0, 0, Input<Floating>, exticr1),
     PI1: (pi1, 1, Input<Floating>, exticr1),
@@ -1167,14 +1035,7 @@ gpio!(GPIOI, gpioi, 8, PI, 8, [
     PI15: (pi15, 15, Input<Floating>, exticr4),
 ]);
 
-#[cfg(any(
-    feature = "stm32f427",
-    feature = "stm32f429",
-    feature = "stm32f437",
-    feature = "stm32f439",
-    feature = "stm32f469",
-    feature = "stm32f479"
-))]
+#[cfg(feature = "gpioj")]
 gpio!(GPIOJ, gpioj, 9, PJ, 9, [
     PJ0: (pj0, 0, Input<Floating>, exticr1),
     PJ1: (pj1, 1, Input<Floating>, exticr1),
@@ -1194,14 +1055,7 @@ gpio!(GPIOJ, gpioj, 9, PJ, 9, [
     PJ15: (pj15, 15, Input<Floating>, exticr4),
 ]);
 
-#[cfg(any(
-    feature = "stm32f427",
-    feature = "stm32f429",
-    feature = "stm32f437",
-    feature = "stm32f439",
-    feature = "stm32f469",
-    feature = "stm32f479"
-))]
+#[cfg(feature = "gpiok")]
 gpio!(GPIOK, gpiok, 10, PK, 10, [
     PK0: (pk0, 0, Input<Floating>, exticr1),
     PK1: (pk1, 1, Input<Floating>, exticr1),

@@ -65,23 +65,105 @@ device-selected = []
 rt = ["stm32f4/rt"]
 # Note: stm32f4 has only one feature for some very similar device families,
 # so it's intended for e.g. stm32f405/415 to both enable stm32f4/stm32f405.
-stm32f401 = ["stm32f4/stm32f401", "device-selected"]
-stm32f405 = ["stm32f4/stm32f405", "device-selected"]
-stm32f407 = ["stm32f4/stm32f407", "device-selected"]
-stm32f410 = ["stm32f4/stm32f410", "device-selected"]
-stm32f411 = ["stm32f4/stm32f411", "device-selected"]
-stm32f412 = ["stm32f4/stm32f412", "device-selected"]
-stm32f413 = ["stm32f4/stm32f413", "device-selected"]
-stm32f415 = ["stm32f4/stm32f405", "device-selected"]
-stm32f417 = ["stm32f4/stm32f407", "device-selected"]
-stm32f423 = ["stm32f4/stm32f413", "device-selected"]
-stm32f427 = ["stm32f4/stm32f427", "device-selected"]
-stm32f429 = ["stm32f4/stm32f429", "device-selected"]
-stm32f437 = ["stm32f4/stm32f427", "device-selected"]
-stm32f439 = ["stm32f4/stm32f429", "device-selected"]
-stm32f446 = ["stm32f4/stm32f446", "device-selected"]
-stm32f469 = ["stm32f4/stm32f469", "device-selected"]
-stm32f479 = ["stm32f4/stm32f469", "device-selected"]
+stm32f401 = ["stm32f4/stm32f401", "device-selected",
+    "gpiod", "gpioe",
+    "otg-fs",
+    "spi3", "spi4",
+    "i2c3",
+]
+stm32f405 = ["stm32f4/stm32f405", "device-selected",
+    "gpiod", "gpioe", "gpiof", "gpiog", "gpioi",
+    "otg-fs",
+    "spi3",
+    "i2c3",
+]
+stm32f407 = ["stm32f4/stm32f407", "device-selected",
+    "gpiod", "gpioe", "gpiof", "gpiog", "gpioi",
+    "otg-fs",
+    "spi3",
+    "i2c3",
+]
+stm32f410 = ["stm32f4/stm32f410", "device-selected",
+    "spi5",
+]
+stm32f411 = ["stm32f4/stm32f411", "device-selected",
+    "gpiod", "gpioe",
+    "otg-fs",
+    "spi3", "spi4", "spi5",
+    "i2c3",
+]
+stm32f412 = ["stm32f4/stm32f412", "device-selected",
+    "gpiod", "gpioe", "gpiof", "gpiog",
+    "otg-fs",
+    "spi3", "spi4", "spi5",
+    "i2c3",
+]
+stm32f413 = ["stm32f4/stm32f413", "device-selected",
+    "gpiod", "gpioe", "gpiof", "gpiog",
+    "otg-fs",
+    "spi3", "spi4", "spi5",
+    "i2c3",
+]
+stm32f415 = ["stm32f4/stm32f405", "device-selected",
+    "gpiod", "gpioe", "gpiof", "gpiog", "gpioi",
+    "otg-fs",
+    "spi3",
+    "i2c3",
+]
+stm32f417 = ["stm32f4/stm32f407", "device-selected",
+    "gpiod", "gpioe", "gpiof", "gpiog", "gpioi",
+    "otg-fs",
+    "spi3",
+    "i2c3",
+]
+stm32f423 = ["stm32f4/stm32f413", "device-selected",
+    "gpiod", "gpioe", "gpiof", "gpiog",
+    "otg-fs",
+    "spi3", "spi4", "spi5",
+    "i2c3",
+]
+stm32f427 = ["stm32f4/stm32f427", "device-selected",
+    "gpiod", "gpioe", "gpiof", "gpiog", "gpioi", "gpioj", "gpiok",
+    "otg-fs",
+    "spi3", "spi4", "spi5", "spi6",
+    "i2c3",
+]
+stm32f429 = ["stm32f4/stm32f429", "device-selected",
+    "gpiod", "gpioe", "gpiof", "gpiog", "gpioi", "gpioj", "gpiok",
+    "otg-fs",
+    "spi3", "spi4", "spi5", "spi6",
+    "i2c3",
+]
+stm32f437 = ["stm32f4/stm32f427", "device-selected",
+    "gpiod", "gpioe", "gpiof", "gpiog", "gpioi", "gpioj", "gpiok",
+    "otg-fs",
+    "spi3", "spi4", "spi5", "spi6",
+    "i2c3",
+]
+stm32f439 = ["stm32f4/stm32f429", "device-selected",
+    "gpiod", "gpioe", "gpiof", "gpiog", "gpioi", "gpioj", "gpiok",
+    "otg-fs",
+    "spi3", "spi4", "spi5", "spi6",
+    "i2c3",
+]
+stm32f446 = ["stm32f4/stm32f446", "device-selected",
+    "gpiod", "gpioe", "gpiof", "gpiog",
+    "otg-fs",
+    "spi3", "spi4",
+    "i2c3",
+]
+stm32f469 = ["stm32f4/stm32f469", "device-selected",
+    "gpiod", "gpioe", "gpiof", "gpiog", "gpioi", "gpioj", "gpiok",
+    "otg-fs",
+    "spi3", "spi4", "spi5", "spi6",
+    "i2c3",
+]
+stm32f479 = ["stm32f4/stm32f469", "device-selected",
+    "gpiod", "gpioe", "gpiof", "gpiog", "gpioi", "gpioj", "gpiok",
+    "otg-fs",
+    "spi3", "spi4", "spi5", "spi6",
+    "i2c3",
+]
 
 usb_fs = ["synopsys-usb-otg", "synopsys-usb-otg/fs"]
 usb_hs = ["synopsys-usb-otg", "synopsys-usb-otg/hs"]
@@ -93,6 +175,20 @@ sdio = ["sdio-host"]
 i2s = ["stm32_i2s_v12x"]
 
 fsmc_lcd = ["display-interface"]
+
+gpiod = []
+gpioe = []
+gpiof = []
+gpiog = []
+gpioi = []
+gpioj = []
+gpiok = []
+otg-fs = []
+spi3 = []
+spi4 = []
+spi5 = []
+spi6 = []
+i2c3 = []
 
 [profile.dev]
 debug = true
