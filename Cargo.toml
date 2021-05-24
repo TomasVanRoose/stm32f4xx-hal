@@ -76,15 +76,24 @@ stm32f405 = ["stm32f4/stm32f405", "device-selected",
     "otg-fs",
     "spi3",
     "i2c3",
+    "can1", "can2",
+    "dac",
+    "fsmc",
+    "adc2", "adc3",
 ]
 stm32f407 = ["stm32f4/stm32f407", "device-selected",
     "gpiod", "gpioe", "gpiof", "gpiog", "gpioi",
     "otg-fs",
     "spi3",
     "i2c3",
+    "can1", "can2",
+    "dac",
+    "fsmc",
+    "adc2", "adc3",
 ]
 stm32f410 = ["stm32f4/stm32f410", "device-selected",
     "spi5",
+    "dac",
 ]
 stm32f411 = ["stm32f4/stm32f411", "device-selected",
     "gpiod", "gpioe",
@@ -97,72 +106,116 @@ stm32f412 = ["stm32f4/stm32f412", "device-selected",
     "otg-fs",
     "spi3", "spi4", "spi5",
     "i2c3",
+    "can1", "can2",
+    "fsmc",
 ]
 stm32f413 = ["stm32f4/stm32f413", "device-selected",
     "gpiod", "gpioe", "gpiof", "gpiog",
     "otg-fs",
     "spi3", "spi4", "spi5",
     "i2c3",
+    "can1", "can2",
+    "dac",
+    "fsmc",
 ]
 stm32f415 = ["stm32f4/stm32f405", "device-selected",
     "gpiod", "gpioe", "gpiof", "gpiog", "gpioi",
     "otg-fs",
     "spi3",
     "i2c3",
+    "can1", "can2",
+    "dac",
+    "fsmc",
+    "adc2", "adc3",
 ]
 stm32f417 = ["stm32f4/stm32f407", "device-selected",
     "gpiod", "gpioe", "gpiof", "gpiog", "gpioi",
     "otg-fs",
     "spi3",
     "i2c3",
+    "can1", "can2",
+    "dac",
+    "fsmc",
+    "adc2", "adc3",
 ]
 stm32f423 = ["stm32f4/stm32f413", "device-selected",
     "gpiod", "gpioe", "gpiof", "gpiog",
     "otg-fs",
     "spi3", "spi4", "spi5",
     "i2c3",
+    "can1", "can2",
+    "dac",
+    "fsmc",
 ]
 stm32f427 = ["stm32f4/stm32f427", "device-selected",
     "gpiod", "gpioe", "gpiof", "gpiog", "gpioi", "gpioj", "gpiok",
     "otg-fs",
     "spi3", "spi4", "spi5", "spi6",
     "i2c3",
+    "can1", "can2",
+    "dac",
+    "fsmc",
+    "adc2", "adc3",
 ]
 stm32f429 = ["stm32f4/stm32f429", "device-selected",
     "gpiod", "gpioe", "gpiof", "gpiog", "gpioi", "gpioj", "gpiok",
     "otg-fs",
     "spi3", "spi4", "spi5", "spi6",
     "i2c3",
+    "can1", "can2",
+    "dac",
+    "fmc",
+    "adc2", "adc3",
 ]
 stm32f437 = ["stm32f4/stm32f427", "device-selected",
     "gpiod", "gpioe", "gpiof", "gpiog", "gpioi", "gpioj", "gpiok",
     "otg-fs",
     "spi3", "spi4", "spi5", "spi6",
     "i2c3",
+    "can1", "can2",
+    "dac",
+    "fsmc",
+    "adc2", "adc3",
 ]
 stm32f439 = ["stm32f4/stm32f429", "device-selected",
     "gpiod", "gpioe", "gpiof", "gpiog", "gpioi", "gpioj", "gpiok",
     "otg-fs",
     "spi3", "spi4", "spi5", "spi6",
     "i2c3",
+    "can1", "can2",
+    "dac",
+    "fmc",
+    "adc2", "adc3",
 ]
 stm32f446 = ["stm32f4/stm32f446", "device-selected",
     "gpiod", "gpioe", "gpiof", "gpiog",
     "otg-fs",
     "spi3", "spi4",
     "i2c3",
+    "can1", "can2",
+    "dac",
+    "fmc",
+    "adc2", "adc3",
 ]
 stm32f469 = ["stm32f4/stm32f469", "device-selected",
     "gpiod", "gpioe", "gpiof", "gpiog", "gpioi", "gpioj", "gpiok",
     "otg-fs",
     "spi3", "spi4", "spi5", "spi6",
     "i2c3",
+    "can1", "can2",
+    "dac",
+    "fmc",
+    "adc2", "adc3",
 ]
 stm32f479 = ["stm32f4/stm32f469", "device-selected",
     "gpiod", "gpioe", "gpiof", "gpiog", "gpioi", "gpioj", "gpiok",
     "otg-fs",
     "spi3", "spi4", "spi5", "spi6",
     "i2c3",
+    "can1", "can2",
+    "dac",
+    "fmc",
+    "adc2", "adc3",
 ]
 
 usb_fs = ["synopsys-usb-otg", "synopsys-usb-otg/fs"]
@@ -189,6 +242,13 @@ spi4 = []
 spi5 = []
 spi6 = []
 i2c3 = []
+can1 = []
+can2 = []
+dac = []
+fmc = []
+fsmc = []
+adc2 = []
+adc3 = []
 
 [profile.dev]
 debug = true

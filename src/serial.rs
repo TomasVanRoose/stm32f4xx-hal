@@ -24,7 +24,7 @@ use embedded_hal::prelude::*;
 use embedded_hal::serial;
 use nb::block;
 
-use crate::stm32::{RCC, USART1, USART2, USART6};
+use crate::pac::{RCC, USART1, USART2, USART6};
 
 #[cfg(any(
     feature = "stm32f405",
@@ -42,7 +42,7 @@ use crate::stm32::{RCC, USART1, USART2, USART6};
     feature = "stm32f469",
     feature = "stm32f479"
 ))]
-use crate::stm32::USART3;
+use crate::pac::USART3;
 
 #[cfg(any(
     feature = "stm32f405",
@@ -59,7 +59,7 @@ use crate::stm32::USART3;
     feature = "stm32f469",
     feature = "stm32f479"
 ))]
-use crate::stm32::{UART4, UART5};
+use crate::pac::{UART4, UART5};
 
 #[cfg(any(
     feature = "stm32f413",
@@ -71,10 +71,10 @@ use crate::stm32::{UART4, UART5};
     feature = "stm32f469",
     feature = "stm32f479"
 ))]
-use crate::stm32::{UART7, UART8};
+use crate::pac::{UART7, UART8};
 
 #[cfg(any(feature = "stm32f413", feature = "stm32f423"))]
-use crate::stm32::{UART10, UART9};
+use crate::pac::{UART10, UART9};
 
 #[cfg(any(
     feature = "stm32f410",
@@ -1747,7 +1747,7 @@ pub trait Instance: private::Sealed {
     #[doc(hidden)]
     fn pclk_freq(clocks: &Clocks) -> u32;
     #[doc(hidden)]
-    unsafe fn enable_clock(rcc: &crate::stm32::rcc::RegisterBlock);
+    unsafe fn enable_clock(rcc: &crate::pac::rcc::RegisterBlock);
     #[doc(hidden)]
     fn set_stopbits(&self, bits: config::StopBits);
 }
@@ -1767,14 +1767,14 @@ macro_rules! halUsart {
                     clocks.$pclkX().0
                 }
 
-                unsafe fn enable_clock(rcc: &crate::stm32::rcc::RegisterBlock) {
+                unsafe fn enable_clock(rcc: &crate::pac::rcc::RegisterBlock) {
                     use crate::bb;
 
                     bb::set(&rcc.$apbXenr, $rcc_bit);
                 }
 
                 fn set_stopbits(&self, bits: config::StopBits) {
-                    use crate::stm32::usart1::cr2::STOP_A;
+                    use crate::pac::usart1::cr2::STOP_A;
                     use config::StopBits;
 
                     self
@@ -1836,7 +1836,7 @@ macro_rules! halUart {
                     clocks.$pclkX().0
                 }
 
-                unsafe fn enable_clock(rcc: &crate::stm32::rcc::RegisterBlock) {
+                unsafe fn enable_clock(rcc: &crate::pac::rcc::RegisterBlock) {
                     use crate::bb;
 
                     bb::set(&rcc.$apbXenr, $rcc_bit);
@@ -1846,7 +1846,7 @@ macro_rules! halUart {
                 }
 
                 fn set_stopbits(&self, bits: config::StopBits) {
-                    use crate::stm32::uart4::cr2::STOP_A;
+                    use crate::pac::uart4::cr2::STOP_A;
                     use config::StopBits;
 
                     self

@@ -1,25 +1,30 @@
 use crate::pac::rcc::RegisterBlock as RccRB;
 
+mod private {
+    pub trait Sealed {}
+}
+
 /// Enable/disable peripheral
-pub trait Enable {
+pub trait Enable: private::Sealed {
     fn enable(rcc: &RccRB);
     fn disable(rcc: &RccRB);
 }
 
 /// Low power enable/disable peripheral
-pub trait LPEnable {
+pub trait LPEnable: private::Sealed {
     fn low_power_enable(rcc: &RccRB);
     fn low_power_disable(rcc: &RccRB);
 }
 
 /// Reset peripheral
-pub trait Reset {
+pub trait Reset: private::Sealed {
     fn reset(rcc: &RccRB);
 }
 
 macro_rules! bus {
     ($($PER:ident => ($busenr:ident, $peren:ident, $buslpenr:ident, $perlpen:ident, $busrstr:ident, $perrst:ident),)+) => {
         $(
+            impl private::Sealed for crate::pac::$PER {}
             impl Enable for crate::pac::$PER {
                 #[inline(always)]
                 fn enable(rcc: &RccRB) {
@@ -57,6 +62,7 @@ macro_rules! bus {
 }
 
 bus! {
+    CRC => (ahb1enr, crcen, ahb1lpenr, crclpen, ahb1rstr, crcrst),
     DMA1 => (ahb1enr, dma1en, ahb1lpenr, dma1lpen, ahb1rstr, dma1rst),
     DMA2 => (ahb1enr, dma2en, ahb1lpenr, dma2lpen, ahb1rstr, dma2rst),
 }
@@ -68,12 +74,12 @@ bus! {
     GPIOH => (ahb1enr, gpiohen, ahb1lpenr, gpiohlpen, ahb1rstr, gpiohrst),
 }
 
-#[cfg(any(feature = "gpiod", feature = "gpioe",))]
+#[cfg(any(feature = "gpiod", feature = "gpioe"))]
 bus! {
     GPIOD => (ahb1enr, gpioden, ahb1lpenr, gpiodlpen, ahb1rstr, gpiodrst),
     GPIOE => (ahb1enr, gpioeen, ahb1lpenr, gpioelpen, ahb1rstr, gpioerst),
 }
-#[cfg(any(feature = "gpiof", feature = "gpiog",))]
+#[cfg(any(feature = "gpiof", feature = "gpiog"))]
 bus! {
     GPIOF => (ahb1enr, gpiofen, ahb1lpenr, gpioflpen, ahb1rstr, gpiofrst),
     GPIOG => (ahb1enr, gpiogen, ahb1lpenr, gpioglpen, ahb1rstr, gpiogrst),
@@ -84,19 +90,25 @@ bus! {
     GPIOI => (ahb1enr, gpioien, ahb1lpenr, gpioilpen, ahb1rstr, gpioirst),
 }
 
-#[cfg(any(feature = "gpioj", feature = "gpiok",))]
+#[cfg(any(feature = "gpioj", feature = "gpiok"))]
 bus! {
     GPIOJ => (ahb1enr, gpiojen, ahb1lpenr, gpiojlpen, ahb1rstr, gpiojrst),
     GPIOK => (ahb1enr, gpioken, ahb1lpenr, gpioklpen, ahb1rstr, gpiokrst),
 }
 
-// TODO: need checks
 #[cfg(feature = "otg-fs")]
 bus! {
-    OTG_FS_DEVICE => (ahb2enr, otgfsen, ahb2lpenr, otgfslpen, ahb2rstr, otgfsrst),
     OTG_FS_GLOBAL => (ahb2enr, otgfsen, ahb2lpenr, otgfslpen, ahb2rstr, otgfsrst),
-    OTG_FS_HOST => (ahb2enr, otgfsen, ahb2lpenr, otgfslpen, ahb2rstr, otgfsrst),
-    OTG_FS_PWRCLK => (ahb2enr, otgfsen, ahb2lpenr, otgfslpen, ahb2rstr, otgfsrst),
+}
+
+#[cfg(feature = "fmc")]
+bus! {
+    FMC => (ahb3enr, fmcen, ahb3lpenr, fmclpen, ahb3rstr, fmcrst),
+}
+
+#[cfg(feature = "fsmc")]
+bus! {
+    FSMC => (ahb3enr, fsmcen, ahb3lpenr, fsmclpen, ahb3rstr, fsmcrst),
 }
 
 bus! {
@@ -131,10 +143,38 @@ bus! {
 bus! {
     I2C3 => (apb1enr, i2c3en, apb1lpenr, i2c3lpen, apb1rstr, i2c3rst),
 }
+#[cfg(feature = "fmpi2c1")]
+bus! {
+    FMPI2C1 => (apb1enr, fmpi2c1en, apb1lpenr, fmpi2c1lpen, apb1rstr, fmpi2c1rst),
+}
 
 // TODO: fix uart2rst
 bus! {
     USART1 => (apb2enr, usart1en, apb2lpenr, usart1lpen, apb2rstr, usart1rst),
     USART2 => (apb1enr, usart2en, apb1lpenr, usart2lpen, apb1rstr, uart2rst),
     USART6 => (apb2enr, usart6en, apb2lpenr, usart6lpen, apb2rstr, usart6rst),
+}
+
+#[cfg(any(feature = "can1", feature = "can2"))]
+bus! {
+    CAN1 => (apb1enr, can1en, apb1lpenr, can1lpen, apb1rstr, can1rst),
+    CAN2 => (apb1enr, can2en, apb1lpenr, can2lpen, apb1rstr, can2rst),
+}
+#[cfg(feature = "dac")]
+bus! {
+    DAC => (apb1enr, dacen, apb1lpenr, daclpen, apb1rstr, dacrst),
+}
+
+bus! {
+    SYSCFG => (apb2enr, syscfgen, apb2lpenr, syscfglpen, apb2rstr, syscfgrst),
+}
+
+bus! {
+    ADC1 => (apb2enr, adc1en, apb2lpenr, adc1lpen, apb2rstr, adcrst),
+}
+
+#[cfg(any(feature = "adc2", feature = "adc3"))]
+bus! {
+    ADC2 => (apb2enr, adc2en, apb2lpenr, adc2lpen, apb2rstr, adcrst),
+    ADC3 => (apb2enr, adc3en, apb2lpenr, adc3lpen, apb2rstr, adcrst),
 }

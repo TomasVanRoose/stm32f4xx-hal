@@ -2,9 +2,9 @@ use core::cmp;
 use core::mem;
 
 use crate::hal::blocking::rng;
+use crate::pac;
+use crate::pac::RNG;
 use crate::rcc::Clocks;
-use crate::stm32;
-use crate::stm32::RNG;
 use crate::time::U32Ext;
 use core::num::NonZeroU32;
 use core::ops::Shl;
@@ -38,7 +38,7 @@ impl RngExt for RNG {
     /// otherwise all reads of the RNG would return a ClockError (CECS error).
     /// This function will panic if pll48clk < 1/16 hclk.
     fn constrain(self, clocks: Clocks) -> Rng {
-        let rcc = unsafe { &*stm32::RCC::ptr() };
+        let rcc = unsafe { &*pac::RCC::ptr() };
 
         cortex_m::interrupt::free(|_| {
             // enable RNG_CLK (peripheral clock)

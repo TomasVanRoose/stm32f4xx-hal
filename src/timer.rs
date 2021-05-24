@@ -23,7 +23,7 @@ use void::Void;
     feature = "stm32f469",
     feature = "stm32f479"
 ))]
-use crate::stm32::TIM6;
+use crate::pac::TIM6;
 #[cfg(any(
     feature = "stm32f401",
     feature = "stm32f405",
@@ -43,7 +43,7 @@ use crate::stm32::TIM6;
     feature = "stm32f469",
     feature = "stm32f479"
 ))]
-use crate::stm32::{TIM1, TIM11, TIM5, TIM9};
+use crate::pac::{TIM1, TIM11, TIM5, TIM9};
 #[cfg(any(
     feature = "stm32f401",
     feature = "stm32f405",
@@ -62,7 +62,7 @@ use crate::stm32::{TIM1, TIM11, TIM5, TIM9};
     feature = "stm32f469",
     feature = "stm32f479"
 ))]
-use crate::stm32::{TIM10, TIM2, TIM3, TIM4};
+use crate::pac::{TIM10, TIM2, TIM3, TIM4};
 #[cfg(any(
     feature = "stm32f405",
     feature = "stm32f407",
@@ -79,7 +79,7 @@ use crate::stm32::{TIM10, TIM2, TIM3, TIM4};
     feature = "stm32f469",
     feature = "stm32f479"
 ))]
-use crate::stm32::{TIM12, TIM13, TIM14, TIM7, TIM8};
+use crate::pac::{TIM12, TIM13, TIM14, TIM7, TIM8};
 use crate::{bb, pac::RCC};
 
 use crate::rcc::Clocks;

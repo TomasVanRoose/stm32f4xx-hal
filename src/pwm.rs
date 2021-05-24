@@ -20,8 +20,8 @@ use core::{marker::PhantomData, mem::MaybeUninit};
     feature = "stm32f469",
     feature = "stm32f479"
 ))]
-use crate::stm32::{TIM1, TIM11, TIM5, TIM9};
-use crate::{bb, hal, rcc::Clocks, stm32::RCC, time::Hertz};
+use crate::pac::{TIM1, TIM11, TIM5, TIM9};
+use crate::{bb, hal, pac::RCC, rcc::Clocks, time::Hertz};
 
 #[cfg(any(
     feature = "stm32f401",
@@ -41,7 +41,7 @@ use crate::{bb, hal, rcc::Clocks, stm32::RCC, time::Hertz};
     feature = "stm32f469",
     feature = "stm32f479"
 ))]
-use crate::stm32::{TIM10, TIM2, TIM3, TIM4};
+use crate::pac::{TIM10, TIM2, TIM3, TIM4};
 
 #[cfg(any(
     feature = "stm32f405",
@@ -59,7 +59,7 @@ use crate::stm32::{TIM10, TIM2, TIM3, TIM4};
     feature = "stm32f469",
     feature = "stm32f479"
 ))]
-use crate::stm32::{TIM12, TIM13, TIM14, TIM8};
+use crate::pac::{TIM12, TIM13, TIM14, TIM8};
 
 pub trait Pins<TIM, P> {
     const C1: bool = false;

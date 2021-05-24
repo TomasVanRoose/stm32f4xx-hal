@@ -1,23 +1,23 @@
 use core::ops::Deref;
 use core::ptr;
 
-use crate::bb;
 use embedded_hal::spi;
 pub use embedded_hal::spi::{Mode, Phase, Polarity};
 
-use crate::stm32::{spi1, RCC, SPI1, SPI2};
+use crate::pac::{spi1, RCC, SPI1, SPI2};
+use crate::rcc::Enable;
 
 #[cfg(feature = "spi3")]
-use crate::stm32::SPI3;
+use crate::pac::SPI3;
 
 #[cfg(feature = "spi4")]
-use crate::stm32::SPI4;
+use crate::pac::SPI4;
 
 #[cfg(feature = "spi5")]
-use crate::stm32::SPI5;
+use crate::pac::SPI5;
 
 #[cfg(feature = "spi6")]
-use crate::stm32::SPI6;
+use crate::pac::SPI6;
 
 #[cfg(any(
     feature = "stm32f413",
@@ -533,15 +533,9 @@ impl<PINS> Spi<SPI1, PINS> {
         PINS: Pins<SPI1>,
     {
         unsafe {
-            const EN_BIT: u8 = 12;
             // NOTE(unsafe) this reference will only be used for atomic writes with no side effects.
             let rcc = &(*RCC::ptr());
-
-            // Enable clock.
-            bb::set(&rcc.apb2enr, EN_BIT);
-
-            // Stall the pipeline to work around erratum 2.1.13 (DM00037591)
-            cortex_m::asm::dsb();
+            SPI1::enable(rcc);
         }
 
         Spi { spi, pins }.init(mode, freq, clocks.pclk2())
@@ -554,15 +548,9 @@ impl<PINS> Spi<SPI2, PINS> {
         PINS: Pins<SPI2>,
     {
         unsafe {
-            const EN_BIT: u8 = 14;
             // NOTE(unsafe) this reference will only be used for atomic writes with no side effects.
             let rcc = &(*RCC::ptr());
-
-            // Enable clock.
-            bb::set(&rcc.apb1enr, EN_BIT);
-
-            // Stall the pipeline to work around erratum 2.1.13 (DM00037591)
-            cortex_m::asm::dsb();
+            SPI2::enable(rcc);
         }
 
         Spi { spi, pins }.init(mode, freq, clocks.pclk1())
@@ -576,15 +564,9 @@ impl<PINS> Spi<SPI3, PINS> {
         PINS: Pins<SPI3>,
     {
         unsafe {
-            const EN_BIT: u8 = 15;
             // NOTE(unsafe) this reference will only be used for atomic writes with no side effects.
             let rcc = &(*RCC::ptr());
-
-            // Enable clock.
-            bb::set(&rcc.apb1enr, EN_BIT);
-
-            // Stall the pipeline to work around erratum 2.1.13 (DM00037591)
-            cortex_m::asm::dsb();
+            SPI3::enable(rcc);
         }
 
         Spi { spi, pins }.init(mode, freq, clocks.pclk1())
@@ -598,15 +580,9 @@ impl<PINS> Spi<SPI4, PINS> {
         PINS: Pins<SPI4>,
     {
         unsafe {
-            const EN_BIT: u8 = 13;
             // NOTE(unsafe) this reference will only be used for atomic writes with no side effects.
             let rcc = &(*RCC::ptr());
-
-            // Enable clock.
-            bb::set(&rcc.apb2enr, EN_BIT);
-
-            // Stall the pipeline to work around erratum 2.1.13 (DM00037591)
-            cortex_m::asm::dsb();
+            SPI4::enable(rcc);
         }
 
         Spi { spi, pins }.init(mode, freq, clocks.pclk2())
@@ -620,15 +596,9 @@ impl<PINS> Spi<SPI5, PINS> {
         PINS: Pins<SPI5>,
     {
         unsafe {
-            const EN_BIT: u8 = 20;
             // NOTE(unsafe) this reference will only be used for atomic writes with no side effects.
             let rcc = &(*RCC::ptr());
-
-            // Enable clock.
-            bb::set(&rcc.apb2enr, EN_BIT);
-
-            // Stall the pipeline to work around erratum 2.1.13 (DM00037591)
-            cortex_m::asm::dsb();
+            SPI5::enable(rcc);
         }
 
         Spi { spi, pins }.init(mode, freq, clocks.pclk2())
@@ -642,15 +612,9 @@ impl<PINS> Spi<SPI6, PINS> {
         PINS: Pins<SPI6>,
     {
         unsafe {
-            const EN_BIT: u8 = 21;
             // NOTE(unsafe) this reference will only be used for atomic writes with no side effects.
             let rcc = &(*RCC::ptr());
-
-            // Enable clock.
-            bb::set(&rcc.apb2enr, EN_BIT);
-
-            // Stall the pipeline to work around erratum 2.1.13 (DM00037591)
-            cortex_m::asm::dsb();
+            SPI6::enable(rcc);
         }
 
         Spi { spi, pins }.init(mode, freq, clocks.pclk2())

@@ -3,9 +3,7 @@
 //! [ST AN4759](https:/www.st.com%2Fresource%2Fen%2Fapplication_note%2Fdm00226326-using-the-hardware-realtime-clock-rtc-and-the-tamper-management-unit-tamp-with-stm32-microcontrollers-stmicroelectronics.pdf&usg=AOvVaw3PzvL2TfYtwS32fw-Uv37h)
 
 use crate::bb;
-use crate::pac::{PWR, RTC};
-use crate::stm32::rcc::RegisterBlock;
-use crate::stm32::RCC;
+use crate::pac::{rcc::RegisterBlock, PWR, RCC, RTC};
 use core::convert::TryInto;
 use rtcc::{Datelike, Hours, NaiveDate, NaiveDateTime, NaiveTime, Rtcc, Timelike};
 

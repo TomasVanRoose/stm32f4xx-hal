@@ -29,90 +29,69 @@ pub use nb;
 pub use nb::block;
 
 #[cfg(feature = "stm32f401")]
-pub use stm32f4::stm32f401 as stm32;
+pub use stm32f4::stm32f401 as pac;
 
 #[cfg(feature = "stm32f405")]
-pub use stm32f4::stm32f405 as stm32;
+pub use stm32f4::stm32f405 as pac;
 
 #[cfg(feature = "stm32f407")]
-pub use stm32f4::stm32f407 as stm32;
+pub use stm32f4::stm32f407 as pac;
 
 #[cfg(feature = "stm32f410")]
-pub use stm32f4::stm32f410 as stm32;
+pub use stm32f4::stm32f410 as pac;
 
 #[cfg(feature = "stm32f411")]
-pub use stm32f4::stm32f411 as stm32;
+pub use stm32f4::stm32f411 as pac;
 
 #[cfg(feature = "stm32f412")]
-pub use stm32f4::stm32f412 as stm32;
+pub use stm32f4::stm32f412 as pac;
 
 #[cfg(feature = "stm32f413")]
-pub use stm32f4::stm32f413 as stm32;
+pub use stm32f4::stm32f413 as pac;
 
 #[cfg(feature = "stm32f415")]
-pub use stm32f4::stm32f405 as stm32;
+pub use stm32f4::stm32f405 as pac;
 
 #[cfg(feature = "stm32f417")]
-pub use stm32f4::stm32f407 as stm32;
+pub use stm32f4::stm32f407 as pac;
 
 #[cfg(feature = "stm32f423")]
-pub use stm32f4::stm32f413 as stm32;
+pub use stm32f4::stm32f413 as pac;
 
 #[cfg(feature = "stm32f427")]
-pub use stm32f4::stm32f427 as stm32;
+pub use stm32f4::stm32f427 as pac;
 
 #[cfg(feature = "stm32f429")]
-pub use stm32f4::stm32f429 as stm32;
+pub use stm32f4::stm32f429 as pac;
 
 #[cfg(feature = "stm32f437")]
-pub use stm32f4::stm32f427 as stm32;
+pub use stm32f4::stm32f427 as pac;
 
 #[cfg(feature = "stm32f439")]
-pub use stm32f4::stm32f429 as stm32;
+pub use stm32f4::stm32f429 as pac;
 
 #[cfg(feature = "stm32f446")]
-pub use stm32f4::stm32f446 as stm32;
+pub use stm32f4::stm32f446 as pac;
 
 #[cfg(feature = "stm32f469")]
-pub use stm32f4::stm32f469 as stm32;
+pub use stm32f4::stm32f469 as pac;
 
 #[cfg(feature = "stm32f479")]
-pub use stm32f4::stm32f469 as stm32;
+pub use stm32f4::stm32f469 as pac;
 
 // Enable use of interrupt macro
 #[cfg(feature = "rt")]
-pub use crate::stm32::interrupt;
+pub use crate::pac::interrupt;
 
 #[cfg(feature = "device-selected")]
 pub mod adc;
 #[cfg(feature = "device-selected")]
 pub mod bb;
-#[cfg(all(
-    feature = "can",
-    any(
-        feature = "stm32f405",
-        feature = "stm32f407",
-        feature = "stm32f412",
-        feature = "stm32f413",
-        feature = "stm32f415",
-        feature = "stm32f417",
-        feature = "stm32f423",
-        feature = "stm32f427",
-        feature = "stm32f429",
-        feature = "stm32f437",
-        feature = "stm32f439",
-        feature = "stm32f446",
-        feature = "stm32f469",
-        feature = "stm32f479",
-    )
-))]
+#[cfg(all(feature = "can", any(feature = "can1", feature = "can2",)))]
 pub mod can;
 #[cfg(feature = "device-selected")]
 pub mod crc32;
-#[cfg(all(
-    feature = "device-selected",
-    not(any(feature = "stm32f411", feature = "stm32f412", feature = "stm32f401",))
-))]
+#[cfg(all(feature = "device-selected", feature = "dac"))]
 pub mod dac;
 #[cfg(feature = "device-selected")]
 pub mod delay;
@@ -122,27 +101,7 @@ pub mod gpio;
 pub mod i2c;
 #[cfg(all(feature = "device-selected", feature = "i2s"))]
 pub mod i2s;
-#[cfg(all(
-    feature = "usb_fs",
-    any(
-        feature = "stm32f401",
-        feature = "stm32f405",
-        feature = "stm32f407",
-        feature = "stm32f411",
-        feature = "stm32f412",
-        feature = "stm32f413",
-        feature = "stm32f415",
-        feature = "stm32f417",
-        feature = "stm32f423",
-        feature = "stm32f427",
-        feature = "stm32f429",
-        feature = "stm32f437",
-        feature = "stm32f439",
-        feature = "stm32f446",
-        feature = "stm32f469",
-        feature = "stm32f479",
-    )
-))]
+#[cfg(all(feature = "usb_fs", feature = "otg-fs"))]
 pub mod otg_fs;
 #[cfg(all(
     any(feature = "usb_hs", docsrs),
@@ -174,31 +133,13 @@ pub mod otg_hs;
 pub mod rng;
 
 #[cfg(feature = "device-selected")]
-pub use stm32 as pac;
+pub use pac as stm32;
 
 #[cfg(feature = "device-selected")]
 pub mod dma;
 #[cfg(feature = "device-selected")]
 pub mod dwt;
-#[cfg(all(
-    feature = "fsmc_lcd",
-    any(
-        feature = "stm32f405",
-        feature = "stm32f407",
-        feature = "stm32f412",
-        feature = "stm32f413",
-        feature = "stm32f415",
-        feature = "stm32f417",
-        feature = "stm32f423",
-        feature = "stm32f427",
-        feature = "stm32f429",
-        feature = "stm32f437",
-        feature = "stm32f439",
-        feature = "stm32f446",
-        feature = "stm32f469",
-        feature = "stm32f479"
-    )
-))]
+#[cfg(all(feature = "fsmc_lcd", any(feature = "fmc", feature = "fsmc",)))]
 pub mod fsmc_lcd;
 #[cfg(feature = "device-selected")]
 pub mod prelude;

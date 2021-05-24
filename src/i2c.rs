@@ -1,11 +1,12 @@
 use core::ops::Deref;
 use embedded_hal::blocking::i2c::{Read, Write, WriteRead};
 
-use crate::{bb, pac::i2c1};
+use crate::pac::i2c1;
+use crate::rcc::{Enable, Reset};
 
 #[cfg(feature = "i2c3")]
-use crate::stm32::I2C3;
-use crate::stm32::{I2C1, I2C2, RCC};
+use crate::pac::I2C3;
+use crate::pac::{I2C1, I2C2, RCC};
 
 #[cfg(feature = "i2c3")]
 use crate::gpio::gpioa::PA8;
@@ -127,7 +128,7 @@ pub struct I2c<I2C: Instance, PINS> {
     pins: PINS,
 }
 
-#[cfg(any(feature = "stm32f413", feature = "stm32f423",))]
+#[cfg(feature = "fmpi2c1")]
 /// I2C FastMode+ abstraction
 pub struct FMPI2c<I2C, PINS> {
     i2c: I2C,
@@ -365,29 +366,16 @@ mod private {
     pub trait Sealed {}
 }
 
-// Implemented by all I2C instances
-pub trait Instance: private::Sealed + Deref<Target = i2c1::RegisterBlock> {
-    #[doc(hidden)]
-    unsafe fn enable_clock(rcc: &crate::stm32::rcc::RegisterBlock);
-}
+pub trait Instance: private::Sealed + Deref<Target = i2c1::RegisterBlock> + Enable + Reset {}
 
+// Implemented by all I2C instances
 macro_rules! i2c {
     ($(
         $I2C:ident: ($i2c:ident, $apbXenr:ident, $en_bit:expr, $apbxrstr:ident, $reset_bit:expr),
     )+) => {
         $(
             impl private::Sealed for $I2C {}
-            impl Instance for $I2C {
-                unsafe fn enable_clock(rcc: &crate::stm32::rcc::RegisterBlock) {
-                    bb::set(&rcc.$apbXenr, $en_bit);
-
-                    // Stall the pipeline to work around erratum 2.1.13 (DM00037591)
-                    cortex_m::asm::dsb();
-
-                    bb::set(&rcc.$apbxrstr, $reset_bit);
-                    bb::clear(&rcc.$apbxrstr, $reset_bit);
-                }
-            }
+            impl Instance for $I2C {}
 
             impl<PINS> I2c<$I2C, PINS>
             where
@@ -420,35 +408,21 @@ i2c! {
     I2C3: (i2c3, apb1enr, 23, apb1rstr, 23),
 }
 
-#[cfg(any(feature = "stm32f413", feature = "stm32f423",))]
+#[cfg(feature = "fmpi2c1")]
 impl<PINS> FMPI2c<FMPI2C1, PINS> {
     pub fn fmpi2c(i2c: FMPI2C1, pins: PINS, speed: KiloHertz) -> Self
     where
         PINS: Pins<FMPI2C1>,
     {
         unsafe {
-            const EN_BIT: u8 = 24;
-            const RESET_BIT: u8 = 24;
-            const CLKSEL_0: u8 = 22;
-            const CLKSEL_1: u8 = 23;
-
             // NOTE(unsafe) this reference will only be used for atomic writes with no side effects.
             let rcc = &(*RCC::ptr());
 
             // Enable and reset clock.
-            bb::set(&rcc.apb1enr, EN_BIT);
+            FMPI2C1::enable(rcc);
+            FMPI2C1::reset(rcc);
 
-            // Stall the pipeline to work around erratum 2.1.13 (DM00037591)
-            cortex_m::asm::dsb();
-
-            bb::set(&rcc.apb1rstr, RESET_BIT);
-            bb::clear(&rcc.apb1rstr, RESET_BIT);
-
-            // Select source clock. This is suboptimal, we're doing two writes to select a field,
-            // but we can do this because all combinations are valid and the intermediate state is
-            // already the state we want or the reset state.
-            bb::clear(&rcc.dckcfgr2, CLKSEL_0);
-            bb::set(&rcc.dckcfgr2, CLKSEL_1);
+            rcc.dckcfgr2.modify(|_, w| w.fmpi2c1sel().hsi());
         }
 
         let i2c = FMPI2c { i2c, pins };
@@ -470,7 +444,8 @@ where
             let rcc = &(*RCC::ptr());
 
             // Enable and reset clock.
-            I2C::enable_clock(&rcc);
+            I2C::enable(rcc);
+            I2C::reset(rcc);
         }
 
         let i2c = I2c { i2c, pins };

@@ -24,7 +24,7 @@ use crate::{
     feature = "stm32f469",
     feature = "stm32f479"
 ))]
-use crate::stm32::{TIM1, TIM5};
+use crate::pac::{TIM1, TIM5};
 
 #[cfg(any(
     feature = "stm32f401",
@@ -44,7 +44,7 @@ use crate::stm32::{TIM1, TIM5};
     feature = "stm32f469",
     feature = "stm32f479"
 ))]
-use crate::stm32::{TIM2, TIM3, TIM4};
+use crate::pac::{TIM2, TIM3, TIM4};
 
 #[cfg(any(
     feature = "stm32f405",
@@ -62,7 +62,7 @@ use crate::stm32::{TIM2, TIM3, TIM4};
     feature = "stm32f469",
     feature = "stm32f479"
 ))]
-use crate::stm32::TIM8;
+use crate::pac::TIM8;
 
 pub trait Pins<TIM> {}
 use crate::timer::PinC1;
