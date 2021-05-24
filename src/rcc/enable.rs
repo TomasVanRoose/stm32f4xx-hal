@@ -112,6 +112,10 @@ bus! {
 }
 
 bus! {
+    PWR => (apb1enr, pwren, apb1lpenr, pwrlpen, apb1rstr, pwrrst),
+}
+
+bus! {
     SPI1 => (apb2enr, spi1en, apb2lpenr, spi1lpen, apb2rstr, spi1rst),
     SPI2 => (apb1enr, spi2en, apb1lpenr, spi2lpen, apb1rstr, spi2rst),
 }
@@ -148,11 +152,30 @@ bus! {
     FMPI2C1 => (apb1enr, fmpi2c1en, apb1lpenr, fmpi2c1lpen, apb1rstr, fmpi2c1rst),
 }
 
-// TODO: fix uart2rst
+// TODO: fix uart2rst, uart3rst
 bus! {
     USART1 => (apb2enr, usart1en, apb2lpenr, usart1lpen, apb2rstr, usart1rst),
     USART2 => (apb1enr, usart2en, apb1lpenr, usart2lpen, apb1rstr, uart2rst),
     USART6 => (apb2enr, usart6en, apb2lpenr, usart6lpen, apb2rstr, usart6rst),
+}
+#[cfg(feature = "usart3")]
+bus! {
+    USART3 => (apb1enr, usart3en, apb1lpenr, usart3lpen, apb1rstr, uart3rst),
+}
+#[cfg(any(feature = "uart4", feature = "uart5"))]
+bus! {
+    UART4 => (apb1enr, uart4en, apb1lpenr, uart4lpen, apb1rstr, uart4rst),
+    UART5 => (apb1enr, uart5en, apb1lpenr, uart5lpen, apb1rstr, uart5rst),
+}
+#[cfg(any(feature = "uart7", feature = "uart8"))]
+bus! {
+    UART7 => (apb1enr, uart7en, apb1lpenr, uart7lpen, apb1rstr, uart7rst),
+    UART8 => (apb1enr, uart8en, apb1lpenr, uart8lpen, apb1rstr, uart8rst),
+}
+#[cfg(any(feature = "uart9", feature = "uart10"))]
+bus! {
+    UART9 => (apb2enr, uart9en, apb2lpenr, uart9lpen, apb2rstr, uart9rst),
+    UART10 => (apb2enr, uart10en, apb2lpenr, uart10lpen, apb2rstr, uart10rst),
 }
 
 #[cfg(any(feature = "can1", feature = "can2"))]
@@ -177,4 +200,9 @@ bus! {
 bus! {
     ADC2 => (apb2enr, adc2en, apb2lpenr, adc2lpen, apb2rstr, adcrst),
     ADC3 => (apb2enr, adc3en, apb2lpenr, adc3lpen, apb2rstr, adcrst),
+}
+
+#[cfg(feature = "sdio")]
+bus! {
+    SDIO => (apb2enr, sdioen, apb2lpenr, sdiolpen, apb2rstr, sdiorst),
 }

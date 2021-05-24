@@ -151,10 +151,7 @@ pub mod qei;
 pub mod rcc;
 #[cfg(feature = "device-selected")]
 pub mod rtc;
-#[cfg(all(
-    feature = "sdio",
-    not(any(feature = "stm32f410", feature = "stm32f446",))
-))]
+#[cfg(all(feature = "sdio-host", feature = "sdio",))]
 pub mod sdio;
 #[cfg(feature = "device-selected")]
 pub mod serial;
