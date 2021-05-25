@@ -1,10 +1,54 @@
+use crate::bb;
 use crate::gpio::{
     gpioa::*, gpiob::*, gpioc::*, gpiod::*, gpioe::*, gpiof::*, gpiog::*, gpioh::*, gpioi::*,
     Alternate, AF13,
 };
+use crate::pac;
 use crate::pac::dcmi::RegisterBlock as DCMIRegisterBlock;
+use crate::pac::DCMI;
+use core::ops::Deref;
 
-pub trait Instance: Deref<Target = DCMIRegisterBlock> {}
+pub(crate) mod sealed {
+    /// Converts value to bits for setting a register value.
+    pub trait Bits<T> {
+        /// Returns the bit value.
+        fn bits(self) -> T;
+    }
+}
+
+/// Trait for peripheral's clock enabling.
+pub trait RccEnable {
+    /// Enable the peripheral's clock in the RCC.
+    fn rcc_enable();
+}
+
+impl RccEnable for DCMI {
+    fn rcc_enable() {
+        unsafe {
+            //NOTE(unsafe) this reference will only be used for atomic writes with no side effects
+            let rcc = &(*pac::RCC::ptr());
+            // Enable and reset the timer peripheral
+            bb::set(&rcc.ahb2enr, 0);
+
+            // Stall the pipeline to work around erratum 2.1.13 (DM00037591)
+            cortex_m::asm::dsb();
+
+            bb::set(&rcc.ahb2rstr, 0);
+            bb::clear(&rcc.ahb2rstr, 0);
+        }
+    }
+}
+
+/// Trait representing an instance of a DCMI peripheral.
+pub trait Instance: Deref<Target = DCMIRegisterBlock> {
+    fn ptr() -> *const DCMIRegisterBlock;
+}
+
+impl Instance for DCMI {
+    fn ptr() -> *const DCMIRegisterBlock {
+        DCMI::ptr()
+    }
+}
 
 pub trait DcmiD0 {}
 pub trait DcmiD1 {}
